@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Legal Document Assistant</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Legal Document Assistant</h1>
+        <form action="/process" method="post" enctype="multipart/form-data">
+            <label for="document">Upload Legal Document:</label>
+            <input type="file" name="document" required>
+            <select name="language">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="ta">Tamil</option>
+                <!-- Add more Indian languages -->
+            </select>
+            <button type="submit">Process</button>
+        </form>
+
+        {% if summary %}
+        <div class="result">
+            <h2>AI Summary</h2>
+            <p>{{ summary }}</p>
+
+            <h2>Traditional NLP Summary</h2>
+            <p>{{ traditional_summary }}</p>
+
+            <h2>Drafted Output</h2>
+            <p>{{ drafted_output }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

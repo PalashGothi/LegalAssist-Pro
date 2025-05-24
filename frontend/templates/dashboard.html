@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>AI Performance Dashboard</h2>
+    <canvas id="timeChart"></canvas>
+    <script>
+        const ctx = document.getElementById('timeChart').getContext('2d');
+        fetch('/metrics').then(res => res.json()).then(data => {
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.requests.map((_, i) => i + 1),
+                    datasets: [{
+                        label: 'Response Times',
+                        data: data.summarization_times,
+                        borderColor: 'blue'
+                    }]
+                }
+            });
+        });
+    </script>
+</body>
+</html>

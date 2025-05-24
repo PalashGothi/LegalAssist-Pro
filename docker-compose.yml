@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  legal_assistant:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./users:/app/users
+      - ./benchmarks:/app/benchmarks
+      - ./evaluation_results:/app/evaluation_results
+      - ./terminology:/app/terminology
+    environment:
+      - HUGGINGFACEHUB_API_TOKEN=HUGGINGFACE_API_KEY: ${HF_API_KEY}
+      - SECRET_KEY=${SECRET_KEY:-default_secret_key_replace_in_production}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
